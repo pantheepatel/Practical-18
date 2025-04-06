@@ -7,6 +7,8 @@ namespace ViewModels.Models
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? Course { get; set; }
-        public int Age { get; set; }
+        public string? Email { get; set; }
+        public string? EnrollmentNo { get; set; }
+        public DateTime AdmissionDate { get; set; }
     }
 }

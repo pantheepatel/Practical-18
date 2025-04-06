@@ -3,40 +3,51 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ViewModels.Models;
 using ViewModels.Repository.AuthRepo;
+using ViewModels.Repository.StudentRepo;
 
 namespace ViewModels.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
     public class UserController(IUserRepository userRepository, IMapper mapper) : Controller
     {
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> Index()
         {
             var users = await userRepository.GetAllAsync();
             var userVMs = mapper.Map<List<UserViewModel>>(users);
-            return Ok(userVMs);
+            return View(userVMs);
         }
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+
+        public async Task<IActionResult> Details(int id)
         {
             var user = await userRepository.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
-            return Ok(mapper.Map<UserViewModel>(user));
+            var viewModel = mapper.Map<UserViewModel>(user);
+            return View(viewModel);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(User userData)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,MobileNumber,Password,RoleId")] User userData)
         {
             var user = mapper.Map<User>(userData);
             await userRepository.AddAsync(user);
-            var userVM = mapper.Map<UserViewModel>(user);
-            return CreatedAtAction(nameof(GetById), new { id = user.Id }, userVM);
+            return RedirectToAction("Index");
         }
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, User userData)
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var user = await userRepository.GetByIdAsync(id);
+            if (user == null) return NotFound();
+            var viewModel = mapper.Map<UserViewModel>(user);
+            return View(viewModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email,MobileNumber,Password,RoleId")] User userData)
         {
             if (id != userData.Id)
             {
@@ -45,18 +56,40 @@ namespace ViewModels.Controllers
             var user = mapper.Map<User>(userData);
             user.Id = id;
             await userRepository.UpdateAsync(user);
-            return Ok(new { message = "User updated successfully" });
+            return RedirectToAction("Index");
         }
-        [HttpDelete("{id}")]
+
         public async Task<IActionResult> Delete(int id)
         {
-            await userRepository.DeleteAsync(id);
-            return Ok(new { message = "User deleted successfully" });
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await userRepository.GetByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
         }
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(string email, string password)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await userRepository.AuthenticateAsync(email, password);
+            await userRepository.DeleteAsync(id);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginModel loginModel)
+        {
+            var user = await userRepository.AuthenticateAsync(loginModel.Email, loginModel.Password);
             if (user == null)
             {
                 return Unauthorized();

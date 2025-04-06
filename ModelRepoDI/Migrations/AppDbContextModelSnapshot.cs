@@ -37,7 +37,7 @@ namespace ViewModels.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("ViewModels.Models.Student", b =>
@@ -72,7 +72,7 @@ namespace ViewModels.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("ViewModels.Models.User", b =>
@@ -111,7 +111,7 @@ namespace ViewModels.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ViewModels.Models.Student>
+﻿@model IEnumerable<ViewModels.Models.StudentViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EnrollmentNo)
+                @Html.DisplayNameFor(model => model)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Email)

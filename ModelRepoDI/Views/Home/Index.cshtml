@@ -5,8 +5,9 @@
 <p>
     Welcome to the Student Management Portal
     <ul>
-        <li>CRUD operations implemented using Entity Framework Core and AutoMapper</li>
+        <li>CRUD operations for User and Student implemented using Entity Framework Core and AutoMapper</li>
         <li>Authentication and Authorization will be added in the next practical.</li>
     </ul>
-    @Html.ActionLink("Go to Student Management App", "Index", "Student", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Student List", "Index", "Student", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("User List", "Index", "User", null, new { @class = "btn btn-primary" })
 </p>
