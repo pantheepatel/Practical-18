@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ViewModels.Models;
 
-namespace ViewModels
+namespace ViewModels.Data
 {
     public class AppDbContext : DbContext
     {

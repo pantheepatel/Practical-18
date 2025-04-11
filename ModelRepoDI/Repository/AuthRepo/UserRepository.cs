@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using ViewModels.Data;
 using ViewModels.Models;
 
 namespace ViewModels.Repository.AuthRepo

@@ -1,9 +1,9 @@
-using ViewModels;
 using ViewModels.Models;
 using Microsoft.EntityFrameworkCore;
 using ViewModels.Repository.StudentRepo;
 using ViewModels.Repository.AuthRepo;
 using ViewModels.Mapping;
+using ViewModels.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
